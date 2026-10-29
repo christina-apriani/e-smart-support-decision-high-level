@@ -1,0 +1,17 @@
+{
+  "name": "quantum-strategic-ledger",
+  "version": "1.0.0",
+  "description": "Quantum Strategic Ledger (Q-SL): macro financial-interconnection advisor with deterministic Anti-Halu constraint validation and 3-horizon recommendations. Authored by Christina Apriani.",
+  "author": "Christina Apriani",
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "server.js",
+  "engines": { "node": ">=20.0.0" },
+  "scripts": {
+    "start": "node --no-warnings server.js",
+    "dev": "node --no-warnings --watch server.js",
+    "test": "node --no-warnings test/qsl.test.js"
+  },
+  "keywords": ["decision-support", "constraint-validation", "payment-systems", "strategic-planning", "fintech"],
+  "dependencies": {}
+}

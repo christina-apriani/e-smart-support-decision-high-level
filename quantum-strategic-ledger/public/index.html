@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quantum Strategic Ledger — E-Smart Support Decision</title>
+<meta name="author" content="Christina Apriani" />
+<meta name="description" content="Quantum Strategic Ledger (Q-SL): macro financial-interconnection advisor with deterministic Anti-Halu constraint validation and 3-horizon strategic recommendations. Built by Christina Apriani." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%234d7cff'/%3E%3Ctext x='16' y='22' font-size='15' text-anchor='middle' fill='%23fff' font-family='monospace' font-weight='bold'%3EQ%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+<header>
+  <div class="hbar">
+    <div class="brand">
+      <div class="logo"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#fff" stroke-width="1.6"/><ellipse cx="12" cy="12" rx="9" ry="3.6" stroke="#fff" stroke-width="1.3" opacity=".7"/><ellipse cx="12" cy="12" rx="3.6" ry="9" stroke="#fff" stroke-width="1.3" opacity=".7"/><circle cx="12" cy="12" r="1.8" fill="#fff"/></svg></div>
+      <div><h1>Quantum Strategic Ledger</h1>
+        <div class="sub">E-SMART SUPPORT DECISION · PENASIHAT INTERKONEKSI FINANSIAL MAKRO</div></div>
+    </div>
+    <div class="hstat">
+      <span class="pill" id="modePill"><span class="dot"></span><span id="modeText">connecting…</span></span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="tabs">
+    <button class="tab active" data-v="advisor">🧭 3-Horizon Advisor</button>
+    <button class="tab" data-v="validator">🛡️ Anti-Halu Validator</button>
+    <button class="tab" data-v="network">🗺️ Live Network</button>
+    <button class="tab" data-v="decisions">📒 Decision Ledger</button>
+    <button class="tab" data-v="rules">📚 Constraint Rules</button>
+  </nav>
+
+  <div class="stats">
+    <div class="stat"><div class="k" id="st_dec" style="color:var(--quantum2)">0</div><div class="l">Keputusan Tersimpan</div></div>
+    <div class="stat"><div class="k" id="st_appr" style="color:var(--ok)">0</div><div class="l">Disetujui</div></div>
+    <div class="stat"><div class="k" id="st_rej" style="color:var(--rej)">0</div><div class="l">Ditolak Validator</div></div>
+    <div class="stat"><div class="k" id="st_rules" style="color:var(--cyan)">0</div><div class="l">Aturan Constraint</div></div>
+  </div>
+
+  <!-- ADVISOR -->
+  <section class="view active" id="advisor">
+    <div class="grid cols-2b">
+      <div class="card">
+        <h2><span class="bar"></span>Parameter Input (live metrics)</h2>
+        <div class="slider-row"><div class="sh"><span>Lonjakan beban kluster (%)</span><b id="v_spike">18%</b></div><input type="range" id="m_spike" min="0" max="60" value="18"></div>
+        <label class="f">Mitra / kluster</label>
+        <input class="x" id="m_partner" value="Mitra e-commerce X">
+        <div class="field-row">
+          <div><label class="f">Base TPS mitra</label><input class="x" id="m_base" type="number" value="2800"></div>
+          <div><label class="f">Jam puncak</label><input class="x" id="m_window" value="12:00–13:00"></div>
+        </div>
+        <div class="slider-row" style="margin-top:14px"><div class="sh"><span>Proyeksi penurunan interchange / QRIS (%)</span><b id="v_qris">14%</b></div><input type="range" id="m_qris" min="0" max="40" value="14"></div>
+        <div class="field-row">
+          <div><label class="f">Jumlah ATM Link</label><input class="x" id="m_atm" type="number" value="4200"></div>
+          <div><label class="f">% ATM kinerja rendah</label><input class="x" id="m_low" type="number" value="30"></div>
+        </div>
+        <div class="field-row" style="margin-top:4px">
+          <div><label class="f">Alokasi laba ditahan (%)</label><input class="x" id="m_alloc" type="number" value="15"></div>
+          <div><label class="f">Horizon CBDC (tahun)</label><input class="x" id="m_cbdc" type="number" value="6"></div>
+        </div>
+        <div class="row" style="margin-top:16px">
+          <button class="btn" id="btnGenerate">🧭 Hasilkan Rekomendasi</button>
+          <button class="btn ghost sm" id="btnSaveAll">Simpan semua</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2><span class="bar"></span>Rekomendasi 3 Horizon <span class="right">tiap rekomendasi tervalidasi</span></h2>
+        <div id="horizonsPane"><div class="empty">Atur parameter lalu tekan "Hasilkan Rekomendasi".</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALIDATOR -->
+  <section class="view" id="validator">
+    <div class="grid cols-2">
+      <div class="card">
+        <h2><span class="bar"></span>Uji Usulan terhadap Constraint</h2>
+        <p class="faint" style="font-size:12px;margin-bottom:8px">Pilih usulan contoh atau susun sendiri. Validator memeriksa kapasitas teknis, regulasi, dan model keuangan secara matematis.</p>
+        <div id="presetChips"></div>
+        <label class="f">Deskripsi usulan</label>
+        <input class="x" id="p_label" value="Migrasi seluruh core ke blockchain dalam 1 bulan">
+        <div class="field-row">
+          <div><label class="f">Tambah beban (TPS)</label><input class="x" id="p_tps" type="number" value="0"></div>
+          <div><label class="f">Lama migrasi (bulan)</label><input class="x" id="p_mig" type="number" value="1"></div>
+        </div>
+        <div class="field-row">
+          <div><label class="f">Leverage pasca (x)</label><input class="x" id="p_lev" type="number" step="0.1" value="1.8"></div>
+          <div><label class="f">Dampak SLA (%)</label><input class="x" id="p_sla" type="number" step="0.01" value="0"></div>
+        </div>
+        <div class="field-row">
+          <div><label class="f">Perlu lisensi baru?</label><select class="x" id="p_lic"><option value="true">Ya</option><option value="false">Tidak</option></select></div>
+          <div><label class="f">Lead time sertifikasi (bln)</label><input class="x" id="p_cert" type="number" value="1"></div>
+        </div>
+        <div class="field-row">
+          <div><label class="f">ROI (%)</label><input class="x" id="p_roi" type="number" value="5"></div>
+          <div><label class="f">Payback (tahun)</label><input class="x" id="p_pay" type="number" value="9"></div>
+        </div>
+        <div class="row" style="margin-top:16px"><button class="btn" id="btnValidate">🛡️ Validasi Usulan</button></div>
+      </div>
+      <div class="card">
+        <h2><span class="bar"></span>Verdict <span class="right" id="valVerdict"></span></h2>
+        <div id="validatePane"><div class="empty">Susun usulan dan tekan Validasi.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NETWORK -->
+  <section class="view" id="network">
+    <div class="card">
+      <h2><span class="bar"></span>Peta Jaringan Pembayaran Nasional (Real-Time) <span class="right"><button class="btn ghost sm" id="btnSurge">Simulasi lonjakan</button></span></h2>
+      <div id="map"></div>
+      <div class="map-legend">
+        <span><i class="dotc" style="background:#4d7cff"></i> Primary DC</span>
+        <span><i class="dotc" style="background:#30e0d4"></i> DRC</span>
+        <span><i class="dotc" style="background:#2ee6a0"></i> Normal</span>
+        <span><i class="dotc" style="background:#ffb020"></i> Beban tinggi</span>
+        <span><i class="dotc" style="background:#ff4d6d"></i> Kritis</span>
+        <span class="faint" id="netTotal"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- DECISIONS -->
+  <section class="view" id="decisions">
+    <div class="card">
+      <h2><span class="bar"></span>Decision Ledger <span class="right"><button class="btn ghost sm" id="btnRefreshDec">Muat ulang</button></span></h2>
+      <div id="decPane"><div class="empty">Belum ada keputusan tersimpan.</div></div>
+    </div>
+  </section>
+
+  <!-- RULES -->
+  <section class="view" id="rules">
+    <div class="card">
+      <h2><span class="bar"></span>Deterministic Business Rules (Anti-Halu)</h2>
+      <p class="faint" style="font-size:12px;margin-bottom:12px">Setiap rekomendasi wajib lolos aturan berikut. Aturan <b>hard</b> menolak; aturan <b>soft</b> memberi peringatan.</p>
+      <div style="overflow-x:auto"><table class="tbl" id="tblRules"></table></div>
+    </div>
+  </section>
+
+  <footer>
+    <div>Dibangun oleh <b class="sig">Christina Apriani</b> · Quantum Strategic Ledger</div>
+    <div class="sig">Deterministic constraint validation · regulasi · kapasitas · model keuangan</div>
+  </footer>
+</div>
+<div id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="js/constraint.js"></script>
+<script src="js/qsl.js"></script>
+<script src="js/network.js"></script>
+<script src="js/api.js"></script>
+<script src="js/map.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

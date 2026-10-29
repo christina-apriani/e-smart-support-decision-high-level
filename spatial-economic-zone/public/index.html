@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Spatial-Economic Industrial Zone — E-Smart Support Decision</title>
+<meta name="author" content="Christina Apriani" />
+<meta name="description" content="Spatial-Economic Industrial Zone: AI consolidation across 13 industrial zones with a geospatial & fiscal knowledge graph, constraint-validated investor matching, and 3-horizon strategic recommendations. Built by Christina Apriani." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231fbf78'/%3E%3Ctext x='16' y='22' font-size='15' text-anchor='middle' fill='%2304140c' font-family='monospace' font-weight='bold'%3E13%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+<header>
+  <div class="hbar">
+    <div class="brand">
+      <div class="logo"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z" stroke="#04140c" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.5" fill="#04140c"/></svg></div>
+      <div><h1>Spatial-Economic Industrial Zone</h1>
+        <div class="sub">E-SMART SUPPORT DECISION · KONSOLIDASI 13 KAWASAN INDUSTRI</div></div>
+    </div>
+    <div class="hstat">
+      <span class="pill" id="modePill"><span class="dot"></span><span id="modeText">connecting…</span></span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="tabs">
+    <button class="tab active" data-v="map">🗺️ Peta Kawasan</button>
+    <button class="tab" data-v="match">🏭 Investor Matching</button>
+    <button class="tab" data-v="advisor">🧭 3-Horizon Advisor</button>
+    <button class="tab" data-v="zones">🗂️ Data Kawasan</button>
+    <button class="tab" data-v="recs">📒 Rekomendasi</button>
+  </nav>
+
+  <div class="stats">
+    <div class="stat"><div class="k" id="st_zones" style="color:var(--emerald2)">13</div><div class="l">Kawasan Industri</div></div>
+    <div class="stat"><div class="k" id="st_occ" style="color:var(--teal)">—</div><div class="l">Okupansi Rata-rata</div></div>
+    <div class="stat"><div class="k" id="st_surplus" style="color:var(--lime)">—</div><div class="l">Surplus Daya Total</div></div>
+    <div class="stat"><div class="k" id="st_recs" style="color:var(--warn)">0</div><div class="l">Rekomendasi Tersimpan</div></div>
+  </div>
+
+  <!-- MAP -->
+  <section class="view active" id="map">
+    <div class="grid cols-2b">
+      <div class="card">
+        <h2><span class="bar"></span>Peta 13 Kawasan Industri (Real-Time) <span class="right" id="mapHint">klik marker untuk detail</span></h2>
+        <div id="map-el"></div>
+        <div class="map-legend">
+          <span><i class="dotc" style="background:#46d08a"></i> Okupansi rendah (&lt;60%)</span>
+          <span><i class="dotc" style="background:#ffb020"></i> Sedang (60–90%)</span>
+          <span><i class="dotc" style="background:#ff5a6a"></i> Kritis (&gt;90%)</span>
+          <span><i class="dotc" style="background:#27c6b0"></i> Pelabuhan laut dalam</span>
+        </div>
+      </div>
+      <div class="card">
+        <h2><span class="bar"></span>Detail Kawasan <span class="right" id="zoneCount"></span></h2>
+        <div id="zoneDetail"><div class="empty">Klik kawasan pada peta untuk melihat detail geospasial & fiskal.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MATCH -->
+  <section class="view" id="match">
+    <div class="grid cols-2b">
+      <div class="card">
+        <h2><span class="bar"></span>Hasil Pencocokan <span class="right" id="matchRec"></span></h2>
+        <div id="matchPane"><div class="empty">Isi kebutuhan investor di kanan, lalu tekan "Cocokkan Kawasan".</div></div>
+      </div>
+      <div class="card">
+        <h2><span class="bar"></span>Kebutuhan Investor</h2>
+        <p class="faint" style="font-size:12px;margin-bottom:6px">AI tidak akan menyarankan kawasan yang tidak memenuhi syarat lahan, daya, atau pelabuhan.</p>
+        <label class="f">Nama / jenis industri</label>
+        <input class="x" id="r_name" value="Pabrik baja">
+        <label class="f">Sektor</label>
+        <select class="x" id="r_sector"><option>Baja & logam berat</option><option>Kimia</option><option>Elektronik</option><option>Otomotif</option><option>Tekstil</option><option>Oleokimia</option></select>
+        <div class="field-row">
+          <div><label class="f">Kebutuhan daya (MW)</label><input class="x" id="r_power" type="number" value="200"></div>
+          <div><label class="f">Kebutuhan lahan (ha)</label><input class="x" id="r_land" type="number" value="50"></div>
+        </div>
+        <label class="f">Perlu pelabuhan laut dalam?</label>
+        <select class="x" id="r_port"><option value="true">Ya (industri berat/ekspor)</option><option value="false">Tidak</option></select>
+        <div class="row" style="margin-top:16px"><button class="btn" id="btnMatch">🏭 Cocokkan Kawasan</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADVISOR -->
+  <section class="view" id="advisor">
+    <div class="card">
+      <h2><span class="bar"></span>Rekomendasi Konsolidasi 3 Horizon <span class="right"><button class="btn ghost sm" id="btnGenHorizon">Hasilkan</button> <button class="btn ghost sm" id="btnSaveHorizons">Simpan semua</button></span></h2>
+      <div id="horizonsPane"><div class="empty">Tekan "Hasilkan" untuk rekomendasi konsolidasi lintas 13 kawasan.</div></div>
+    </div>
+  </section>
+
+  <!-- ZONES -->
+  <section class="view" id="zones">
+    <div class="card">
+      <h2><span class="bar"></span>Knowledge Graph — Data 13 Kawasan</h2>
+      <div style="overflow-x:auto"><table class="tbl" id="tblZones"></table></div>
+    </div>
+  </section>
+
+  <!-- RECS -->
+  <section class="view" id="recs">
+    <div class="card">
+      <h2><span class="bar"></span>Rekomendasi Tersimpan <span class="right"><button class="btn ghost sm" id="btnRefreshRecs">Muat ulang</button></span></h2>
+      <div id="recsPane"><div class="empty">Belum ada rekomendasi tersimpan.</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div>Dibangun oleh <b class="sig">Christina Apriani</b> · Spatial-Economic Industrial Zone</div>
+    <div class="sig">Geospatial &amp; Fiscal Knowledge Graph · 13 kawasan · optimasi portofolio BUMN</div>
+  </footer>
+</div>
+<div id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha512-BwHfrr4c9kmRkLw6iXFdzcdWV/PGkVgiIyIWLLlTSXzWQzxuSg4DiQUCpauz/EWjgk5TYQqX/kvn9pG1NpYfqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="js/constraint.js"></script>
+<script src="js/zones.js"></script>
+<script src="js/sez.js"></script>
+<script src="js/api.js"></script>
+<script src="js/map.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
