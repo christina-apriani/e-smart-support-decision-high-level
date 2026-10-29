@@ -68,8 +68,7 @@ antar-kawasan, hingga konversi kawasan ke Energi Baru Terbarukan. Dengan peta in
       │   regulasi · kapasitas · model keuangan/spasial│
       └───────────────┬───────────────────┬────────────┘
                       │                   │
-
-&#x09;	      ▼                   ▼
+	                ▼                   ▼
         ┌─────────────────────┐   ┌──────────────────────┐
         │  Q-SL               │   │  Spatial Zone        │
         │  aturan finansial   │   │  knowledge graph 13  │
